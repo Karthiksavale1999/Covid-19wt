@@ -1,0 +1,170 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <title>Corona Track Down</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jqvmap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<style>
+  .bg-img {
+    /* The image used */
+    background-image: url("https://as1.ftcdn.net/jpg/03/31/42/86/500_F_331428609_wq2nRFgootmTUKhCMOEOPbuUk5c01WEo.jpg");
+  
+    min-height: 380px;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+  #grad1 {
+    
+    background-color: #42eff5;
+    background-image: linear-gradient(#42f5a7, #4bf542);
+  }
+  .bg-s {
+    /* The image used */
+    background-image: url("https://i.ytimg.com/vi/b-4wIKK2dpg/maxresdefault.jpg");
+  
+    /* Full height */
+    height: 100%;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .bg-t {
+    /* The image used */
+    background-image: url("https://images.template.net/wp-content/uploads/2016/04/27120651/Beach-Wallpaper.jpg");
+  
+    /* Full height */
+    height: 100%;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .bgnews-img {
+    /* The image used */
+    background-image: url("https://wallpaperplay.com/walls/full/c/1/e/45607.jpg");
+  
+    min-height: 380px;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: yes-repeat;
+    background-size: cover;
+    position: relative;
+  }
+  .vl 
+  .bgarticle-img {
+    /* The image used */
+    background-image: url("https://webstockreview.net/images/light-bulb-clip-art-transparent-background-6.png");
+  
+    min-height: 380px;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+  .vl {
+    border-left: 6px solid green;
+    height: 500px;
+  }
+  .font-face {
+    font-family: myFirstFont;
+    src: url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,599;1,400&display=swap");
+  }
+
+  a {
+    color:inherit;
+    text-decoration: none;
+   }
+
+  
+</style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <!-- Brand/logo -->
+        <a class="navbar-brand" href="#">
+            <img src="https://drive.google.com/thumbnail?id=1aYTaD4BAeSUBZNEDfPPuKIeTLIq4gyqK" alt="logo" style="width:40px;">
+            Corona Track Down
+        </a>
+
+        <!-- Links -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse ml" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="travel">Travel Alert</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="prevent">Prevention</a>
+                </li>  
+                <li class="nav-item">
+                    <a class="nav-link" href="info">Covid 19</a>
+                </li>  
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Analytics
+              </a>
+              <div class="dropdown-menu">
+                <h5 class="dropdown-header">Time Series</h5>
+                    <a class="dropdown-item " href="realtime">
+                        Realtime
+                    </a>
+                    <a class="dropdown-item" href="dashboard">
+                        Dashboard
+                    </a>
+                    <h5 class="dropdown-header">Comparitive Analytics</h5>
+                    <a class="dropdown-item" href="comparitive_analytics">
+                        Country
+                    </a>
+                    <a class="dropdown-item" href="india">
+                        State
+                    </a>
+              </div>
+            </li>  
+            <li>
+                <form class="form-inline" action="/action_page.php">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn bg-primary text-white mr-2 " type="submit">Search</button>
+                </form>
+            </li>
+            <li>
+                <button class="btn btn-secondary " type="submit">Login</button>
+                <button class="btn btn-secondary " type="submit">Sign Up</button>
+            </li>
+            </ul>
+          </div>  
+      </nav>
+      
+
+
+      {% block content %}
+
+      {% endblock %}
+
+    </body>
+</html>

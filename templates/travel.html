@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+
+<section class=" bg-t text-light">
+
+  <h1 class="container  p-5 "> Welcome to Travel Advisor </h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7 ">
+        
+        Flex item 1
+
+    </div>
+    <div class="col-lg-5 border-b">
+
+        <div class="container mt-3 ">
+          <h2 class="">Select Destination Country</h2>
+          <form action="traveldet">
+            <select name="country" class="custom-select mb-3">
+              <option selected>Country</option>
+
+              {% for inc in lt %}
+              <option value="{{inc}}">{{inc}}</option>
+              {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+        
+        <div class="d-flex flex-wrap justify-content-center m-5" >
+          {% if res != null %}
+          <div class="card m-5 p-3 text-info" style="width:300px;background : #22e670 ;display: block;"> 
+            <div class="card-body text-center">
+              <div class="d-flex justify-content-between">
+                  <div class="">
+                      <img src="https://www.countryflags.io/{{res.code}}/shiny/32.png"><br>
+                      <h6 class ="text-left "> {{res.Country}}</h6>
+                  </div>
+              </div>
+      
+                  <div class="progress">
+                      <div class="progress-bar" style="width:{{res.risk}}%"></div>
+                  </div>
+                  <h6 class="text-dark small"> Danger Level ({{res.risk}}%) </h6>
+                  <footer class="text-secondary">Danger Level is {{res.advisory_score}} of 5.0 </footer>
+                  <footer class="text-secondary"> Trust  is {{res.advisory_source}}% </footer>
+                <hr class="w-25">
+                <h3 class="text-primary"> {{res.msg}} </h3>
+                <hr class="w-50">
+            </div>
+      
+          </div>
+          {% else %}
+            <div style="display: block;">
+          {% endif %}
+          </div>
+
+
+      </div>
+    </div>
+</section>
+
+<section class="text-dart ">
+  <div class="container border" >
+    <div class="">
+        <h1 class="text-center text-capitalize font-face p-3"><b>Travel to Safe Locations</b></h1>
+        <hr class="w-25 mx-auto">
+      </div>
+    
+    <div class="d-flex flex-wrap align-content-stretch m-5" >
+        {% for instance1 in trav1 %}
+        <div class="card m-5 p-3 text-info" style="width:300px;background :#AED6F1 "> 
+    
+          <div class="card-body text-center">
+            <div class="d-flex justify-content-between">
+                <div class="">
+                    <img src="https://www.countryflags.io/{{instance1.code}}/shiny/32.png"><br>
+                    <h6 class ="text-left "> {{instance1.Country}}</h6>
+                </div>
+                <div class="">
+                    <span class="badge badge-primary text-right">Safe</span>
+                </div>
+            </div>
+    
+                <div class="progress">
+                    <div class="progress-bar" style="width:{{instance1.risk}}%"></div>
+                </div>
+                <h6 class="text-dark small"> Danger Level ({{instance1.risk}}%) </h6>
+                <footer class="text-secondary">Danger Level is {{instance1.advisory_score}} of 5.0 </footer>
+                <footer class="text-secondary"> Trust  is {{instance1.advisory_source}}% </footer>
+              <hr class="w-25">
+              <h3 class="text-primary"> {{instance1.msg}} </h3>
+              <hr class="w-50">
+          </div>
+    
+        </div>
+    
+    
+          {% endfor %}
+        </div>
+      </div>
+</section>
+
+
+
+
+<section class="container p-3 my-3 border">
+    <div class="container-fluid p-3">
+        <h1 class="text-center text-capitalize text-dark font-face "><b>Moderate Locations</b></h1>
+        <hr class="w-25 mx-auto">
+    </div>
+    
+    <div class="d-flex flex-wrap align-content-stretch m-5" >
+        {% for instance1 in trav2 %}
+        <div class="card m-5 p-3 text-info" style="width:300px;background :#4EEBBA "> 
+    
+          <div class="card-body text-center">
+            <div class="d-flex justify-content-between">
+                <div class="">
+                    <img src="https://www.countryflags.io/{{instance1.code}}/shiny/32.png"><br>
+                    <h6 class ="text-left "> {{instance1.Country}}</h6>
+                </div>
+                <div class="">
+                    <span class="badge badge-warning text-right">Precaution suggested</span>
+                </div>
+            </div>
+    
+                <div class="progress">
+                    <div class="progress-bar" style="width:{{instance1.risk}}%"></div>
+                </div>
+                <h6 class="text-dark small"> Danger Level ({{instance1.risk}}%) </h6>
+                <footer class="text-secondary">Danger Level is {{instance1.advisory_score}} of 5.0 </footer>
+                <footer class="text-secondary"> Trust  is {{instance1.advisory_source}}% </footer>
+              <hr class="w-25">
+              <h3 class="text-primary"> {{instance1.msg}} </h3>
+              <hr class="w-50">
+          </div>
+    
+        </div>
+    
+    
+          {% endfor %}
+        </div>
+</section>
+
+
+<section class="container p-3 my-3 border">
+        <div class="container-fluid p-3">
+            <h1 class="text-center text-capitalize text-dark font-face "><b>Danger Locations</b></h1>
+            <hr class="w-25 mx-auto">
+        </div>
+        
+        <div class="d-flex flex-wrap align-content-center m-3" >
+            {% for instance1 in trav %}
+            <div class="card m-5 p-3 text-info" style="width:300px;background :#EBD84E"> 
+        
+              <div class="card-body text-center">
+                <div class="d-flex justify-content-between">
+                    <div class="">
+                        <img src="https://www.countryflags.io/{{instance1.code}}/shiny/32.png"><br>
+                        <h6 class ="text-left "> {{instance1.Country}}</h6>
+                    </div>
+                    <div class="">
+                        <span class="badge badge-danger text-right">Danger</span>
+                    </div>
+                </div>
+        
+                    <div class="progress">
+                        <div class="progress-bar" style="width:{{instance1.risk}}%"></div>
+                    </div>
+                    <h6 class="text-dark small"> Danger Level ({{instance1.risk}}%) </h6>
+                    <footer class="text-secondary">Danger Level is {{instance1.advisory_score}} of 5.0 </footer>
+                    <footer class="text-secondary"> Trust  is {{instance1.advisory_source}}% </footer>
+                  <hr class="w-25">
+                  <h3 class="text-primary"> {{instance1.msg}} </h3>
+                  <hr class="w-50">
+              </div>
+        
+            </div>
+        
+        
+              {% endfor %}
+        </div>
+</section>
+
+
+
+
+{% endblock %}

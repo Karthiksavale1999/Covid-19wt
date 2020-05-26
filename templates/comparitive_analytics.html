@@ -1,0 +1,663 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="bg-dark text-light">
+
+    
+    <div class="container   ">
+        <div class="container ">
+        <h1> Comparitive Analytics </h1>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-12">
+            <form action="cma">
+                <select name="name1" class="custom-select mb-3">
+                  <option selected>Country</option>
+                      {% for inc in Countries %}
+                          <option value="{{inc}}">{{inc}}</option>
+                      {% endfor %}
+                  </select>
+        </div>
+        <div class="col-lg-6 col-12">
+            <select name="name2" class="custom-select mb-3">
+                <option selected>Country</option>
+                    {% for inc in Countries %}
+                        <option value="{{inc}}">{{inc}}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-info" >Submit</button>
+            </form>
+        </div>
+
+        
+    </div>
+
+    <!---div class="container bg-dark" width ="100px" height = "200px" >
+        Compare CHART
+        <canvas id="compare-chart" ></canvas> 
+    </div--->
+
+</div>
+
+
+<div class="m-3">
+    <div class="container ">
+        <div class="card-header bg-primary" id="c1" style="width:400px"></div>
+    </div>
+    <div class="container ">
+        <div class="card-deck m-3">
+            
+            <div class="card bg-warning">
+              <div class="card-body text-center">
+                Total Confirmed 
+                <p class="card-text">
+                     <h4 id="tc1"> </h4>
+                </p>
+              </div>
+            </div>
+            <div class="card bg-danger">
+                
+              <div class="card-body text-center">
+                Total Deaths 
+                 <h4 id="td1"> </h4>
+              </div>
+            </div>
+            <div class="card bg-success">
+              <div class="card-body text-center">
+                Total Recovered 
+                <h4 id="tr1"> </h4>
+              </div>
+            </div>
+            <div class="card bg-primary">
+                <div class="card-body text-center">
+                  Recovery Rate 
+                  <h4 id="trt1"> </h4>
+                </div>
+              </div>
+              <div class="card bg-info">
+                <div class="card-body text-center">
+                  Death Rate
+                  <h4 id="trd1"> </h4>
+                </div>
+              </div>
+            
+          </div>
+     </div>
+    <div class="container ">
+        <div class="card-header bg-secondary" id="c2" style="width:400px"></div>
+    </div>
+    <div class="container ">
+        <div class="card-deck m-3">
+            
+            <div class="card bg-warning">
+              <div class="card-body text-center">
+                Total Confirmed 
+                <p class="card-text">
+                     <h4 id="tc2"> </h4>
+                </p>
+              </div>
+            </div>
+            <div class="card bg-danger">
+                
+              <div class="card-body text-center">
+                Total Deaths 
+                 <h4 id="td2"> </h4>
+              </div>
+            </div>
+            <div class="card bg-success">
+              <div class="card-body text-center">
+                Total Recovered 
+                <h4 id="tr2"> </h4>
+              </div>
+            </div>
+            <div class="card bg-primary">
+                <div class="card-body text-center">
+                  Recovery Rate 
+                  <h4 id="trt2"> </h4>
+                </div>
+              </div>
+              <div class="card bg-info">
+                <div class="card-body text-center">
+                  Death Rate
+                  <h4 id="trd2"> </h4>
+                </div>
+              </div>
+            
+          </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="row">
+    <div class="col-lg-6 col-12">
+        <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+            <h4 class="text-center"> CONFIRMED CASES </h4>
+                <div class="carousel-inner">
+                <div class="carousel-item active" data-interval="10000">
+                    <canvas id="compare-chartlc" ></canvas> 
+                </div>
+                <div class="carousel-item" data-interval="2000">
+                    <canvas id="compare-chartbc" ></canvas> 
+                </div>
+                
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+                </a>
+
+        </div>
+    </div>
+
+
+
+    <div class="col-lg-6 col-12">
+        <div id="carouselExampleInterval1" class="carousel slide p-2" data-ride="carousel">
+            <h4 class="text-center"> DEATH CASES </h4>
+                <div class="carousel-inner">
+                <div class="carousel-item active" data-interval="10000">
+                    <canvas id="compare-chartld" ></canvas> 
+                </div>
+                <div class="carousel-item" data-interval="2000">
+                    <canvas id="compare-chartbd" ></canvas> 
+                </div>
+                
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleInterval1" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleInterval1" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+                </a>
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-lg-6 col-12">
+        <div id="carouselExampleInterval2" class="carousel slide" data-ride="carousel">
+            <h4 class="text-center"> RECOVERED CASES </h4>
+                <div class="carousel-inner">
+                <div class="carousel-item active" data-interval="10000">
+                    <canvas id="compare-chartlr" ></canvas> 
+                </div>
+                <div class="carousel-item" data-interval="2000">
+                    <canvas id="compare-chartbr" ></canvas> 
+                </div>
+                
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleInterval2" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleInterval2" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+                </a>
+
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-12">
+        <div id="carouselExampleInterval3" class="carousel slide" data-ride="carousel">
+            <h4 class="text-center"> RECOVERED CASES </h4>
+                <div class="carousel-inner">
+                <div class="carousel-item active" data-interval="10000">
+                    <canvas class="" id="lastdayradar" ></canvas>
+                </div>
+                <div class="carousel-item" data-interval="2000">
+                    
+            <canvas class="" id="lastdayradar2" ></canvas>
+                </div>
+                
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleInterval3" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleInterval3" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+                </a>
+
+        </div>
+
+    </div>
+    
+    
+
+    </div>
+
+   
+
+
+
+
+
+
+
+
+
+<script>
+
+   
+    var dashtab ={{dashtab|safe}}
+    var tot0 = dashtab[0]["TotalConfirmed"] 
+    document.getElementById("c1").innerHTML = dashtab[0]["Country"]
+    document.getElementById("tc1").innerHTML = dashtab[0]["TotalConfirmed"]
+    document.getElementById("td1").innerHTML = dashtab[0]["TotalDeaths"]
+    document.getElementById("tr1").innerHTML = dashtab[0]["TotalRecovered"]
+    document.getElementById("trt1").innerHTML = parseInt((dashtab[0]["TotalRecovered"]/tot0 ) *100) + "%"
+    document.getElementById("trd1").innerHTML = parseInt((dashtab[0]["TotalDeaths"]/tot0 ) *100) + "%"
+    document.getElementById("c2").innerHTML = dashtab[1]["Country"]
+    document.getElementById("tc2").innerHTML = dashtab[1]["TotalConfirmed"]
+    document.getElementById("td2").innerHTML = dashtab[1]["TotalDeaths"]
+    document.getElementById("tr2").innerHTML = dashtab[1]["TotalRecovered"]
+    document.getElementById("trt2").innerHTML = parseInt((dashtab[1]["TotalRecovered"]/dashtab[1]["TotalConfirmed"] ) *100) + "%"
+    document.getElementById("trd2").innerHTML = parseInt((dashtab[1]["TotalDeaths"]/dashtab[1]["TotalConfirmed"] ) *100) + "%"
+    selec_name = {{name|safe}}
+    selec_dates = {{dates|safe}}
+    selec_confirmed = {{confirmed|safe}}
+    selec_deaths = {{deaths|safe}}
+    selec_recovered = {{recovered|safe}}
+    selec_colosd = {{colosd|safe}}
+    var myconf1 =[];
+    var myconf2 =[];
+    for(var i =0;i < selec_name.length;i++)
+    {
+        myconf1.push(
+            {
+                data : selec_confirmed[i],
+                label : selec_name[i],
+                backgroundColor: selec_colosd[i]
+            }
+        );
+    }
+    for(var i =0;i < selec_name.length;i++)
+    {
+        myconf2.push(
+            {
+                data : selec_confirmed[i],
+                label : selec_name[i],
+                borderColor: selec_colosd[i]
+            }
+        );
+    }
+
+    var myd1 =[];
+    var myd2 =[];
+    for(var i =0;i < selec_name.length;i++)
+    {
+        myd1.push(
+            {
+                data : selec_deaths[i],
+                label : selec_name[i],
+                backgroundColor: selec_colosd[i]
+            }
+        );
+    }
+    for(var i =0;i < selec_name.length;i++)
+    {
+        myd2.push(
+            {
+                data : selec_deaths[i],
+                label : selec_name[i],
+                borderColor: selec_colosd[i]
+            }
+        );
+    }
+
+    var myr1 =[];
+    var myr2 =[];
+    for(var i =0;i < selec_name.length;i++)
+    {
+        myr1.push(
+            {
+                data : selec_recovered[i],
+                label : selec_name[i],
+                backgroundColor: selec_colosd[i]
+            }
+        );
+    }
+    for(var i =0;i < selec_name.length;i++)
+    {
+        myr2.push(
+            {
+                data : selec_recovered[i],
+                label : selec_name[i],
+                borderColor: selec_colosd[i]
+            }
+        );
+    }
+
+
+
+    Chart.defaults.global.defaultFontColor = 'white';
+        new Chart(document.getElementById("compare-chartbc"), {
+        
+            type: 'bar',
+            data: {
+              labels: selec_dates,
+              datasets: myconf1
+            },
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 18
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 11,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 8,
+                        }
+                    }]
+                },
+              title: {
+                display: true,
+                text: '',
+                fontColor: "white",
+                fontSize: 18
+              },
+              layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+            }
+          });
+        new Chart(document.getElementById("compare-chartlc"), {
+        
+            type: 'line',
+            data: {
+              labels: selec_dates,
+              datasets: myconf2
+            },
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 18
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 11,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 8,
+                        }
+                    }]
+                },
+              title: {
+                display: true,
+                text: '',
+                fontColor: "white",
+                fontSize: 18
+              },
+              layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+            }
+          });
+        new Chart(document.getElementById("compare-chartbd"), {
+        
+            type: 'bar',
+            data: {
+              labels: selec_dates,
+              datasets: myd1
+            },
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 18
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 11,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 8,
+                        }
+                    }]
+                },
+              title: {
+                display: true,
+                text: '',
+                fontColor: "white",
+                fontSize: 18
+              },
+              layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+            }
+          });
+        new Chart(document.getElementById("compare-chartld"), {
+        
+            type: 'line',
+            data: {
+              labels: selec_dates,
+              datasets: myd2
+            },
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 18
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 11,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 8,
+                        }
+                    }]
+                },
+              title: {
+                display: true,
+                text: '',
+                fontColor: "white",
+                fontSize: 18
+              },
+              layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+            }
+          });
+        new Chart(document.getElementById("compare-chartbr"), {
+        
+            type: 'bar',
+            data: {
+              labels: selec_dates,
+              datasets: myr1
+            },
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 18
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 11,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 8,
+                        }
+                    }]
+                },
+              title: {
+                display: true,
+                text: '',
+                fontColor: "white",
+                fontSize: 18
+              },
+              layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+            }
+          });
+        new Chart(document.getElementById("compare-chartlr"), {
+        
+            type: 'line',
+            data: {
+              labels: selec_dates,
+              datasets: myr2
+            },
+            options: {
+                legend: {
+                    labels: {
+                        fontColor: "white",
+                        fontSize: 18
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 11,
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize: 8,
+                        }
+                    }]
+                },
+              title: {
+                display: true,
+                text: '',
+                fontColor: "white",
+                fontSize: 18
+              },
+              layout: {
+                padding: {
+                    left: 50,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            }
+            }
+          });
+        new Chart(document.getElementById("lastdayradar"), {
+            type: 'doughnut',
+            data: {
+              labels: ["Confirmed","Recovered","Deaths"],
+              datasets: [{
+                label: dashtab[0]["Country"] ,
+                backgroundColor: ["red", "grey","yellow"],
+                data: [dashtab[0]["TotalConfirmed"] , dashtab[0]["TotalRecovered"] , dashtab[0]["TotalDeaths"]]
+              }
+              ]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Overall Country Analysis : -  '+dashtab[0]["Country"]
+              }
+            }
+        });
+        new Chart(document.getElementById("lastdayradar2"), {
+            type: 'doughnut',
+            data: {
+              labels: ["Confirmed","Recovered","Deaths"],
+              datasets: [{
+                label: dashtab[1]["Country"] ,
+                backgroundColor: ["red", "grey","yellow"],
+                data: [dashtab[1]["TotalConfirmed"] , dashtab[1]["TotalRecovered"] , dashtab[1]["TotalDeaths"]]
+              }
+              ]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Overall Country Analysis : -  '+dashtab[1]["Country"]
+              }
+            }
+        });
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    </script>
+
+{% endblock %}

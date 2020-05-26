@@ -1,0 +1,451 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+table { width:100%; text-align:center; }
+table tr, table td { margin:0; padding:2px; border-width:0; }
+</style>
+<div class="bg-dark text-light">
+
+
+    <div class="container ">
+        <div class="card-deck ">
+            
+            <div class="card bg-warning">
+              <div class="card-body text-center">
+                Total Confirmed 
+                <p class="card-text">
+                     <h4 id="tc1"> </h4>
+                </p>
+              </div>
+            </div>
+            <div class="card bg-danger">
+                
+              <div class="card-body text-center">
+                Total Deaths 
+                 <h4 id="td1"> </h4>
+              </div>
+            </div>
+            <div class="card bg-success">
+              <div class="card-body text-center">
+                Total Recovered 
+                <h4 id="tr1"> </h4>
+              </div>
+            </div>
+            <div class="card bg-primary">
+                <div class="card-body text-center">
+                  Recovery Rate 
+                  <h4 id="trt1"> </h4>
+                </div>
+              </div>
+              <div class="card bg-info">
+                <div class="card-body text-center">
+                  Death Rate
+                  <h4 id="trd1"> </h4>
+                </div>
+              </div>
+            
+          </div>
+    </div>
+    
+    <div class="row m-5">
+        <div class="col-lg-3 col-12">
+          
+            <div id="myChart" class="bg-dark">
+    
+            </div>
+        </div>
+        <div class="col-lg-4 col-12">
+          <canvas id="my" width="600" height="400"></canvas>
+        </div>
+        <div class="col-lg-5 col-12">
+          <canvas id="line-chart" width="800" height="450"></canvas>
+        </div>
+
+        
+    </div>
+    <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-12">
+        <h4 class="text-info text-center"> The Statewise Table </h4>
+        <div id="wrapper"></div>
+      </div>
+      <div class="col-lg-4 col-12">
+        <div class="container">
+          <div class="card bg-danger text-white">
+            <div class="card-footer">State With Highest Confirmed Cases</div>
+            <div class="container">
+                <h2 id="mc"></h2>
+                <div class="card-footer" id="cs"></div>
+                <br>
+            </div>
+          </div>
+          <br>
+          <div class="card bg-success text-white">
+            <div class="card-footer">State With Highest Recovery Rate</div>
+            <div class="container">
+              <h3 id="mr"></h3>
+              <div class="card-footer" id="cr"></div>
+              <br>
+            </div>
+          </div>
+          <br>
+          <div class="card bg-warning text-white">
+            <div class="card-footer">State With Highest Death Rate</div>
+            <div class="container">
+              <h2 id="md"></h2>
+              <div class="card-footer" id="cd"></div>
+              <br>
+            </div>
+          </div>
+          <br>
+          <div class="card bg-danger text-white">
+            <div class="card-footer">State With Highest Death Rate more than 5000 cases</div>
+            <div class="container">
+              <h2 id="mb"></h2>
+              <div class="card-footer" id="cb"></div>
+              <br>
+            </div>
+          </div>
+          <br>
+          <div class="card bg-info text-white">
+            <div class="card-footer">State With Highest Recovery Rate more than 5000 cases</div>
+            <div class="container">
+              <h2 id="mw"></h2>
+              <div class="card-footer" id="cw"></div>
+              <br>
+            </div>
+          </div>
+          <br>
+          <div class="card bg-success text-white">
+            <div class="card-footer">State With Overall Best Performance more than 5000 cases</div>
+            <div class="container">
+              <h2 id="mo"></h2>
+              <div class="card-footer" id="co"></div>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+  <script>
+
+    var dashtab = {{glob|safe}}
+    document.getElementById("tc1").innerHTML = dashtab[0]["c"]
+    document.getElementById("td1").innerHTML = dashtab[0]["d"]
+    document.getElementById("tr1").innerHTML = dashtab[0]["r"]
+    document.getElementById("trt1").innerHTML = parseFloat((dashtab[0]["r"] / dashtab[0]["c"] )*100).toFixed(2) + "%"
+    document.getElementById("trd1").innerHTML = parseFloat((dashtab[0]["d"] / dashtab[0]["c"] )*100).toFixed(2) + "%"
+
+
+
+
+    var max_con ={{max_con|safe}}
+    var max_rec = {{max_rec|safe}}
+    var max_death = {{max_death|safe}}
+    var bp ={{Crtical_performance|safe}}
+    document.getElementById("mc").innerHTML = max_con[0]["State"]
+    document.getElementById("cs").innerHTML ="Confirmed  cases : "+ max_con[0]["Confirmed"] + "+ cases"
+    document.getElementById("mr").innerHTML = max_rec[0]["State"]
+    document.getElementById("cr").innerHTML ="Death Rate : "+ max_rec[0]["r"] + "%"
+    document.getElementById("md").innerHTML = max_death[0]["State"]
+    document.getElementById("cd").innerHTML ="Death Rate : "+ max_death[0]["d"] + "%"
+    document.getElementById("mb").innerHTML = bp[6]["State"]
+    document.getElementById("cb").innerHTML ="Death Rate : "+ bp[6]["d"] + "%"
+    document.getElementById("mw").innerHTML = bp[0]["State"]
+    document.getElementById("cw").innerHTML ="Death Rate : "+ bp[0]["r"] + "%"
+    document.getElementById("mo").innerHTML = bp[1]["State"]
+    document.getElementById("co").innerHTML ="Death Rate : "+ bp[1]["d"] + "%" +"<br>"+"Death Rate : "+bp[1]["r"] + "%"
+    function range(start, end) {
+      return Array(end - start + 1).fill().map((_, idx) => start + idx)
+    }
+
+    selec_confirmed = {{ic|safe}}
+    selec_deaths = {{idt|safe}}
+    selec_recovered = {{ir|safe}}
+var chart = document.getElementById('line-chart').getContext('2d'),
+gradient = chart.createLinearGradient(0, 0, 0, 450);
+gradient.addColorStop(0, 'rgba(255, 0,0, 0.5)');
+gradient.addColorStop(0.5, 'rgba(255, 0, 0, 0.25)');
+gradient.addColorStop(1, 'rgba(255, 0, 0, 0)');
+
+
+var data  = {
+  labels: range(0,selec_confirmed[0].length),
+  datasets: [{
+    label: 'Confirmed',
+    backgroundColor: gradient,
+    pointBackgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#911215',
+    data: selec_confirmed[0]
+  }]
+};
+
+
+var options = {
+responsive: true,
+maintainAspectRatio: true,
+animation: {
+  easing: 'easeInOutQuad',
+  duration: 520
+},
+title: {
+  display: true,
+  text: 'Confirmed Cases India'
+},
+scales: {
+  xAxes: [{
+    gridLines: {
+      color: 'rgba(200, 200, 200, 0.05)',
+      lineWidth: 1
+    },
+    ticks: {
+      display: false //this will remove only the label
+     }
+  }],
+  yAxes: [{
+    gridLines: {
+      color: 'rgba(200, 200, 200, 0.08)',
+      lineWidth: 1
+    },
+    ticks: {
+          fontSize: 10
+      }
+  }]
+},
+elements: {
+  line: {
+    tension: 0.4
+  }
+},
+legend: {
+  display: false
+},
+point: {
+  backgroundColor: 'white'
+},
+tooltips: {
+  titleFontFamily: 'Open Sans',
+  backgroundColor: 'rgba(0,0,0,0.3)',
+  titleFontColor: 'red',
+  caretSize: 5,
+  cornerRadius: 2,
+  xPadding: 10,
+  yPadding: 10
+}
+};
+
+
+var chartInstance = new Chart(chart, {
+  type: 'line',
+  data: data,
+  options: options
+});
+
+
+
+    var oilCanvas = document.getElementById("my");
+    Chart.defaults.global.defaultFontFamily = "Lato";
+    Chart.defaults.global.defaultFontSize = 18; 
+    Chart.defaults.global.defaultFontColor = 'white';
+    var oilData = {
+        labels: [
+            "Confirmed",
+            "Deaths",
+            "Recovered"
+        ],
+        datasets: [
+            {
+                data: [dashtab[0]["c"],dashtab[0]["d"],dashtab[0]["r"]],
+                backgroundColor: ["red", "grey","yellow"],
+                borderWidth: 3
+            }]
+    };  
+    var pieChart = new Chart(oilCanvas, {
+      type: 'doughnut',
+      data: oilData,
+      options: {
+          cutoutPercentage: 65,
+          rotation: 1 * Math.PI,
+          circumference: 1 * Math.PI,
+          title: {
+            display: true,
+            text: 'The Modern India'
+          }
+      }
+    });
+
+    var rcrds = {{rcrdse|safe}}
+    var data ={};
+    for(var i =0;i<rcrds.length;i++)
+    {
+        data[rcrds[i]['code'] ] =  {
+                backgroundColor: '#'+(Math.random()*0xFFFFFF<<0).toString(16),
+                label: {
+                    text: rcrds[i]['Code'] ,
+                    fontColor: 'yellow',
+                    fontFamily: 'Georgia',
+                    fontSize: 12
+                    },
+                tooltip: {
+                        backgroundcolor: "#F44336",
+                        padding: "5 10",
+                        bordercolor: "#B71C1C",
+                        borderwidth: 1,
+                        borderradius: 2,
+                        alpha: 0.9,
+                        text: "State    :   "+ rcrds[i]['State']+"\nConirmed    :   "+rcrds[i]['Confirmed']+"\nActive    :   "+rcrds[i]['active']+"\nRecovered    :   "+rcrds[i]['Recovered']+"\nDeaths    :   "+rcrds[i]['Deaths']
+                      },
+                hoverState: {
+                    backgroundColor: '#00BCD4 #B2EBF2'
+                }
+            }
+    }
+    zingchart.THEME = 'dark';
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+    zingchart.loadModules('maps, maps-ind', function(e) {
+      zingchart.render({
+        id: 'myChart',
+        data: {
+          shapes: [{
+            type: 'zingchart.maps',
+            options: {
+              name: 'ind',
+              style: {
+                  items : data ,
+              }
+            }
+          }]
+        },
+        height: 400,
+        width: '100%'
+      });
+    });
+  
+    var dataToTable = function (dataset) {
+      var html = '<table id="dtVerticalScrollExample" >';
+      html += '<thead><tr><th style="width:120px;">#</th>';
+      
+      var columnCount = 0;
+      jQuery.each(dataset.datasets, function (idx, item) {
+          html += '<th style="background-color:' + item.fillColor + ';">' + item.label + '</th>';
+          columnCount += 1;
+      });
+  
+      html += '</tr></thead>';
+  
+      jQuery.each(dataset.labels, function (idx, item) {
+          html += '<tr><td>' + item + '</td>';
+          for (i = 0; i < columnCount; i++) {
+              html += '<td style="background-color:' + dataset.datasets[i].fillColor + ';">' + (dataset.datasets[i].data[idx] === '0' ? '-' : dataset.datasets[i].data[idx]) + '</td>';
+          }
+          html += '</tr>';
+      });
+  
+      html += '</tr><tbody></table>';
+  
+      return html;
+  };
+  
+  lbl = []
+  con = []
+  act = []
+  det = []
+  rec = []
+  deathrt =[]
+  recrt =[]
+
+  for(var i =0;i<rcrds.length;i++)
+    {
+      lbl.push(rcrds[i]['State'])
+      con.push(rcrds[i]['Confirmed'])
+      det.push(rcrds[i]['Deaths'])
+      rec.push(rcrds[i]['Recovered'])
+      act.push(rcrds[i]['active'])
+      deathrt.push(parseFloat((rcrds[i]['Deaths'] / rcrds[i]['Confirmed'] )*100).toFixed(2) + "%")
+      recrt.push(parseFloat((rcrds[i]['Recovered'] / rcrds[i]['Confirmed'] )*100).toFixed(2) + "%")
+    }
+
+
+
+
+
+
+  var dataq = {
+      labels: lbl,
+      datasets: [
+          {
+              label: "Confirmed",
+              fillColor: "rgba(220,220,220,0.2)",
+              strokeColor: "rgba(220,220,220,1)",
+              pointColor: "rgba(220,220,220,1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: con
+          },
+          {
+              label: "Deaths",
+              fillColor: "rgba(151,187,205,0.2)",
+              strokeColor: "rgba(151,187,205,1)",
+              pointColor: "rgba(151,187,205,1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(151,187,205,1)",
+              data: det
+          },
+          {
+              label: "Recovered",
+              fillColor: "rgba(55,187,205,0.2)",
+              strokeColor: "rgba(55,187,205,1)",
+              pointColor: "rgba(55,187,205,1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(151,187,205,1)",
+              data: rec
+          },
+          {
+          label: "Active",
+          fillColor: "rgba(55,187,205,0.2)",
+          strokeColor: "rgba(55,187,205,1)",
+          pointColor: "rgba(55,187,205,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(151,187,205,1)",
+          data: act
+          },
+          {
+          label: "Death Rate",
+          fillColor: "rgba(55,187,205,0.2)",
+          strokeColor: "rgba(55,187,205,1)",
+          pointColor: "rgba(55,187,205,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(151,187,205,1)",
+          data: deathrt
+          },
+          {
+          label: "Recovery Rate",
+          fillColor: "rgba(55,187,205,0.2)",
+          strokeColor: "rgba(55,187,205,1)",
+          pointColor: "rgba(55,187,205,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(151,187,205,1)",
+          data: recrt
+          }
+      ]
+  };
+  
+  jQuery('#wrapper').html(dataToTable(dataq));
+  </script>
+
+
+
+
+  {% endblock %}

@@ -1,0 +1,547 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="container" width ="100px" height = "200px">
+    <canvas id="line-chart" ></canvas> 
+</div>
+
+<div class="">
+    <div class="container">
+    <h1>Highest Cases
+        </h1>
+        <h6>By Country, Territory, or Area</h6>
+    </div>
+<div class="card-deck ">
+
+            <div class="card bg-dark">
+              <div class="card-body text-center">
+                <h4 class="card-title"> India </h4>
+                    <canvas id="IND" ></canvas> 
+              </div>
+            </div>
+            <div class="card bg-dark">
+                <div class="card-body text-center">
+                    <h4 class="card-title"> France </h4>
+                    <canvas id="FR" ></canvas> 
+                </div>
+            </div>
+
+
+            <div class="card bg-dark">
+                <div class="card-body text-center">
+                    <h4 class="card-title"> United Kingdom </h4>
+                    <canvas id="UKR" ></canvas> 
+                </div>
+            </div>
+
+</div>
+
+<div class="card-deck ">
+    <div class="card bg-dark">
+        <div class="card-body text-center">
+                <h4 class="card-title"> Italy </h4>
+                    <canvas id="ITA" ></canvas> 
+              </div>
+            </div>
+            <div class="card bg-dark">
+                <div class="card-body text-center">
+                    <h4 class="card-title"> Russia </h4>
+                    <canvas id="RUS" ></canvas> 
+                </div>
+            </div>
+
+
+            <div class="card bg-dark">
+                <div class="card-body text-center">
+                    <h4 class="card-title"> BELGIUM </h4>
+                    <canvas id="BEL" ></canvas> 
+                </div>
+            </div>
+
+</div>
+<div class="card-deck ">
+    <div class="card bg-dark">
+        <div class="card-body text-center">
+                <h4 class="card-title"> Canada </h4>
+                    <canvas id="CAN" ></canvas> 
+              </div>
+            </div>
+            <div class="card bg-dark">
+                <div class="card-body text-center">
+                    <h4 class="card-title"> Iran </h4>
+                    <canvas id="IRN" ></canvas> 
+                </div>
+            </div>
+
+
+            <div class="card bg-dark">
+                <div class="card-body text-center">
+                    <h4 class="card-title"> USA </h4>
+                    <canvas id="USA" ></canvas> 
+                </div>
+            </div>
+
+</div>
+
+
+<script>
+
+
+    names = {{const_country|safe}};
+    dates = {{const_col|safe}};
+    confirme = {{const_lt|safe}};
+    colos = {{colos|safe}};
+    var mydata =[];
+    for(var i =0;i < names.length;i++)
+    {
+        console.log(i);
+        mydata.push(
+            {
+                data : confirme[i],
+                label : names[i],
+                borderColor: colos[i]
+            }
+        );
+    }
+    new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: mydata
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 11,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 8,
+                    }
+                }]
+            },
+          title: {
+            display: true,
+            text: ' Country Analytics',
+            fontColor: "white",
+            fontSize: 18
+          },
+          layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        }
+      });
+    new Chart(document.getElementById("IND"), {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [mydata[names.indexOf("IND")]]
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 11,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 8,
+                    }
+                }]
+            },
+          title: {
+            display: true,
+            text: '',
+            fontColor: "white",
+            fontSize: 18
+          },
+          layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        }
+      });
+    new Chart(document.getElementById("FR"), {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [mydata[names.indexOf("FRA")]]
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 11,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 8,
+                    }
+                }]
+            },
+          title: {
+            display: true,
+            text: '',
+            fontColor: "white",
+            fontSize: 18
+          },
+          layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        }
+      });
+    new Chart(document.getElementById("UKR"), {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [mydata[names.indexOf("UKR")]]
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 11,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 8,
+                    }
+                }]
+            },
+          title: {
+            display: true,
+            text: '',
+            fontColor: "white",
+            fontSize: 18
+          },
+          layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        }
+      });
+    new Chart(document.getElementById("ITA"), {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [mydata[names.indexOf("ITA")]]
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 11,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 8,
+                    }
+                }]
+            },
+          title: {
+            display: true,
+            text: '',
+            fontColor: "white",
+            fontSize: 18
+          },
+          layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        }
+      });
+    new Chart(document.getElementById("RUS"), {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [mydata[names.indexOf("RUS")]]
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 11,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 8,
+                    }
+                }]
+            },
+          title: {
+            display: true,
+            text: '',
+            fontColor: "white",
+            fontSize: 18
+          },
+          layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        }
+      });
+    new Chart(document.getElementById("BEL"), {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [mydata[names.indexOf("BEL")]]
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 11,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 8,
+                    }
+                }]
+            },
+          title: {
+            display: true,
+            text: '',
+            fontColor: "white",
+            fontSize: 18
+          },
+          layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        }
+      });
+    new Chart(document.getElementById("IRN"), {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [mydata[names.indexOf("IRN")]]
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 11,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 8,
+                    }
+                }]
+            },
+          title: {
+            display: true,
+            text: '',
+            fontColor: "white",
+            fontSize: 18
+          },
+          layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        }
+      });
+    new Chart(document.getElementById("CAN"), {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [mydata[names.indexOf("CAN")]]
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 11,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 8,
+                    }
+                }]
+            },
+          title: {
+            display: true,
+            text: '',
+            fontColor: "white",
+            fontSize: 18
+          },
+          layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        }
+      });
+    new Chart(document.getElementById("USA"), {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [mydata[names.indexOf("USA")]]
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 11,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 8,
+                    }
+                }]
+            },
+          title: {
+            display: true,
+            text: '',
+            fontColor: "white",
+            fontSize: 18
+          },
+          layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        }
+      });
+
+
+
+
+</script>
+
+
+
+{% endblock %}

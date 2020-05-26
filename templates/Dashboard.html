@@ -1,0 +1,449 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="bg-dark text-light">
+<div class="container ">
+<canvas id="line-chart" style="background-image: url('https://lh3.googleusercontent.com/proxy/FmlF-tcAZl6D8d-1ONHLqRYlpcF2ohuBjvr2WsHrKWJwyr3H4YRdt_x6gUjMqh840aIxCAgRymHY_W_clOSRrh52ZSm9EMthbKqzUCR-8bLPVRvvgJLeD0bNYYVvEVHV');background-repeat: no-repeat;background-position: center;"></canvas> 
+</div>
+<div class="container p-3">
+<div class="row">
+    <div class="col-lg-5 col-12">
+        <h4> Confirmed Cases Over Time </h4>
+        <h1 id ="conf"></h1>
+        <footer >Source: World Health Organization</footer>
+        
+    </div>
+    <div class="col-lg-7 col-12">
+        <div class="dropdown p-3">
+            <button type="button" class="btn btn-primary dropdown-toggle " data-toggle="dropdown">
+              Choose Fashion
+            </button>
+            <div class="dropdown-menu">
+                <button type="button"class="btn btn-info dropdown-item" onclick="Cum()"> Cummiliative  </button>
+                <button type="button"class="btn btn-info dropdown-item" onclick="Daily()"> Daily  </button>
+            </div>
+          </div>
+        <canvas class="text-light" id="bar-chart" height="100px"  style="background-image: url('https://lh3.googleusercontent.com/proxy/sovt2fdYHD5_FoYHqqzATku-glcFAq-OYU9DvnGlBGveawM2u9a3DzwC8qXTRWvpJSIv6hllhMrc28G8ByKOV3R1EKt805rPsOILEC8kkDtLa2nJo4HaPmw3JKM7xQ');background-repeat: no-repeat;background-position: center;"></canvas> 
+        
+    </div>
+</div>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-5 col-12">
+                        <h4> Recovered Cases Over Time </h4>
+                        <h1 id ="rec"></h1>
+                        <footer >Source: World Health Organization</footer>
+                
+        </div>
+        <div class="col-lg-7 col-12">
+                        <div class="dropdown p-3">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Choose Fashion
+                            </button>
+                            <div class="dropdown-menu">
+                                <button type="button"class="btn btn-info dropdown-item" onclick="Cumr()"> Cummiliative  </button>
+                                <button type="button"class="btn btn-info dropdown-item" onclick="Dailyr()"> Daily  </button>
+                            </div>
+                          </div>
+                         
+                        <canvas id="bar-chartr" height="100px" style="background-image: url('https://lh3.googleusercontent.com/proxy/sovt2fdYHD5_FoYHqqzATku-glcFAq-OYU9DvnGlBGveawM2u9a3DzwC8qXTRWvpJSIv6hllhMrc28G8ByKOV3R1EKt805rPsOILEC8kkDtLa2nJo4HaPmw3JKM7xQ');background-repeat: no-repeat;background-position: center;"></canvas> 
+         </div>
+    </div>
+</div>
+
+
+
+
+<div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-12">
+                <h4> Deaths Cases Over Time </h4>
+                <h1 id ="deat"></h1>
+                <footer >Source: World Health Organization</footer>
+        
+        </div>
+        <div class="col-lg-7 col-12">
+                <div class="dropdown p-3">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Choose Fashion
+                    </button>
+                    <div class="dropdown-menu">
+                        <button type="button"class="btn btn-info dropdown-item" onclick="Cumd()"> Cummiliative  </button>
+                        <button type="button"class="btn btn-info dropdown-item" onclick="Dailyd()"> Daily  </button>
+                    </div>
+                  </div>
+                 
+                <canvas id="bar-chartd"  height="100px" style="background-image: url('https://lh3.googleusercontent.com/proxy/sovt2fdYHD5_FoYHqqzATku-glcFAq-OYU9DvnGlBGveawM2u9a3DzwC8qXTRWvpJSIv6hllhMrc28G8ByKOV3R1EKt805rPsOILEC8kkDtLa2nJo4HaPmw3JKM7xQ');background-repeat: no-repeat;background-position: center;"></canvas> 
+        </div>
+
+    </div>
+</div>
+
+
+</div>
+<script>
+
+
+
+    confir = {{confirmed|safe}}
+    deat = {{deaths|safe}}
+    rec = {{recovered|safe}}
+    document.getElementById("conf").innerHTML = confir[confir.length - 1];
+    document.getElementById("deat").innerHTML = deat[deat.length - 1];
+    document.getElementById("rec").innerHTML = rec[rec.length - 1];
+
+    myseq = {{sequence_data|safe}}
+    myseqname = {{sequence_name|safe}}
+    myseq_date = {{sequence_dt|safe}}
+    
+
+
+
+    new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+          labels: {{date|safe}},
+          datasets: [
+          { 
+            data: confir,
+            label: "Confirmed",
+            borderColor: "#3e95cd",
+            fill: false
+          }, { 
+            data: deat,
+            label: "Deaths",
+            borderColor: "#8e5ea2",
+            fill: false
+          }, { 
+            data: rec,
+            label: "Recovered",
+            borderColor: "#3cba9f",
+            fill: false
+          },
+          
+          ],
+          lineTension : 9
+        },
+        options: {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 11,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize: 8,
+                    }
+                }]
+            },
+          title: {
+            display: true,
+            text: ' World Wide CoronaVirus Summary',
+            fontColor: "white",
+            fontSize: 18
+          },
+          layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+        }
+      });
+
+     
+
+
+    Daily()
+    Dailyr()
+    Dailyd()
+
+    function Cum() {
+        
+            new Chart(document.getElementById("bar-chart"), {
+                type: 'bar',
+                data: {
+                labels: {{date|safe}},
+                datasets: [
+                    {
+                    label: "Confirmed : ",
+                    backgroundColor: 'orange',
+                    data: {{confirmed|safe}}
+                    }
+                ],
+                hoverBackgroundColor: 'blue'
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 6
+                        }
+                    },
+                title: {
+                    display: true,
+                    text: 'Confirmed ',
+                    fontColor: "white",
+                    fontSize: 8
+                },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "white",
+                        fontSize:5
+                    }
+                }]
+            },
+                }
+            });    
+        }
+        function Cumr() {
+        
+            new Chart(document.getElementById("bar-chartr"), {
+                type: 'bar',
+                data: {
+                labels: {{date|safe}},
+                datasets: [
+                    {
+                    label: "Recovered : ",
+                    backgroundColor: 'green',
+                    data: {{recovered|safe}},
+                    hoverBackgroundColor: 'blue'
+                    }
+                ]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 6
+                        }
+                    },
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Recovered',
+                    fontColor: "white",
+                    fontSize: 8
+                },
+                hoverBackgroundColor:'blue',
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize:5
+                        }
+                    }]
+                },
+                }
+            });    
+        }
+        function Daily() {
+            new Chart(document.getElementById("bar-chart"), {
+                type: 'bar',
+                data: {
+                labels: {{date|safe}},
+                datasets: [
+                    {
+                    label: "Confirmed cases : ",
+                    backgroundColor: 'orange',
+                    data: {{dconfirmed|safe}},
+                    hoverBackgroundColor: 'blue'
+                    }
+                ]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 6
+                        }
+                    },
+                title: {
+                    display: true,
+                    text: 'Confirmed Cases',
+                    fontColor: "white",
+                    fontSize: 8
+                },
+                hoverBackgroundColor:'blue',
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize:5
+                        }
+                    }]
+                },
+                }
+            });    
+        }
+        function Dailyd() {
+            new Chart(document.getElementById("bar-chartd"), {
+                type: 'bar',
+                data: {
+                labels: {{date|safe}},
+                datasets: [
+                    {
+                    label: "Deaths  : ",
+                    backgroundColor: 'red',
+                    data: {{ddeaths|safe}},
+                    hoverBackgroundColor: 'blue'
+                    }
+                ]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 6
+                        }
+                    },
+                title: {
+                    display: true,
+                    text: 'Deaths',
+                    fontColor: "white",
+                    fontSize: 8
+                },
+                hoverBackgroundColor:'blue',
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize:5
+                        }
+                    }]
+                },
+                }
+            });    
+        }
+        function Dailyr() {
+            new Chart(document.getElementById("bar-chartr"), {
+                type: 'bar',
+                data: {
+                labels: {{date|safe}},
+                datasets: [
+                    {
+                    label: "Recovered   : ",
+                    backgroundColor: 'green',
+                    data: {{drecovered|safe}},
+                    hoverBackgroundColor: 'blue'
+                    }
+                ]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 6
+                        }
+                    },
+                title: {
+                    display: true,
+                    text: 'Recovered',
+                    fontColor: "white",
+                    fontSize: 8
+                },
+                hoverBackgroundColor:'blue',
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize:5
+                        }
+                    }]
+                },
+                }
+            });    
+        }
+        function Cumd() {
+        
+            new Chart(document.getElementById("bar-chartd"), {
+                type: 'bar',
+                data: {
+                labels: {{date|safe}},
+                datasets: [
+                    {
+                    label: "Recovered : ",
+                    backgroundColor: 'red',
+                    data: {{deaths|safe}},
+                    hoverBackgroundColor: 'blue'
+                    }
+                ]
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 6
+                        }
+                    },
+                title: {
+                    display: true,
+                    text: 'Recovered',
+                    fontColor: "white",
+                    fontSize: 8
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontColor: "white",
+                            fontSize:5
+                        }
+                    }]
+                },
+                
+                }
+            });    
+        }
+
+
+</script>
+
+
+{% endblock %}

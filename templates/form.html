@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class ="font-weight-bold centre-align w-100 p-3 h-100 d-inline-block m-5">
+
+    User Detail Portal 
+
+</section>
+
+
+<form class="m-5">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-12">
+            <label for="exampleInputEmail1" >Email address</label>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <br>
+            <br>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-12">
+            <label for="exampleInputPassword1" >Password</label>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12">
+            <input type="paaword" class="form-control" id="exampleInputPassword1" aria-describedby="" placeholder="Enter Password">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

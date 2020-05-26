@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="row bgnews-img">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-12 border border-top-0">
+
+        <div class="container-fluid p-3">
+            <h1 class="text-center text-capitalize text-light font-face "><b>The Walstreet Daily</b></h1>
+            <hr class="w-25 mx-auto">
+            <footer class="text-muted small">Sources: Walstreet Media pvt ltd</footer>
+          </div>
+        
+        <div class="card-columns">
+        
+            {% for instance1 in news %}
+            <a href="{{instance1.url}}">
+            <div class="card bg-dark">
+                <img class="card-img-top" src= "{{instance1.urlToImage}}" alt="Card image">
+                <div class="card-body text-light">
+                    <h4 class="card-title text-info">{{instance1.title}}</h4>
+                    <p class="card-text">{{instance1.description}}.</p>
+                    <p class= "text-right"> 
+                        {{instance1.author}}<br>
+                        {{instance1.sourcename}}<br>
+                        {{instance1.publishedAt}}<br>
+                    </p>
+                  </div>
+            </div>
+        </a>
+            {% endfor %}
+          </div>
+    </div>
+    
+    <div class="col-lg-6 col-md-6 col-sm-12 col-12 border border-top-0">
+        <div class="container-fluid p-3">
+            <h1 class="text-center text-capitalize text-light font-face "><b>The Tech Crunch</b></h1>
+            <hr class="w-25 mx-auto">
+          </div>
+        
+        <div class="card-columns ">
+        
+            {% for instance1 in newsit %}
+            <a href="{{instance1.url}}">
+            <div class="card text-light">
+                <img class="card-img-top" src= "{{instance1.urlToImage}}" alt="Card image">
+                <div class="card-body bg-dark">
+                    <h4 class="card-title text-info">{{instance1.title}}</h4>
+                    <p class="card-text">{{instance1.description}}.</p>
+                    <p class= "text-right"> 
+                        {{instance1.author}}<br>
+                        {{instance1.sourcename}}<br>
+                        {{instance1.publishedAt}}<br>
+                    </p>
+                  </div>
+            </div>
+        </a>
+            {% endfor %}
+          </div>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}

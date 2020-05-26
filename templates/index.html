@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<!--- The Covid Data  -->
+
+<div class="row bg-img">
+
+  <div class="col-lg-8 col-md-8 col-12 ">
+
+    <div class="container-fluid p-3">
+      <h3 class="text-center text-capitalize text-info">Global Buletin</h3>
+      <hr class="w-25 mx-auto">
+      <footer class="text-muted small">Sources: WHO, CDC, ECDC, NHC of the PRC, JHU CSSE, DXY, QQ, and various international media</footer>
+    </div>
+    <div class = "card-deck m-2">
+    <div class="card m-3 " style="width:400px">
+      <img class="card-img-top" src="https://ak.picdn.net/shutterstock/videos/25781423/thumb/4.jpg" alt="Card image" style="width:100%">
+      <div class="card-body">
+        <h2 class="card-title text-dark">Total Cases</h2>
+        </div>
+
+        <div class="card-deck">
+          <div class="card bg-info m-2">
+            <div class="card-body text-center">
+              <h5> {{glob.TotalConfirmed}} </h5>
+              <p class="card-text text-dark">Confirmed</p>
+            </div>
+          </div>
+          <div class="card bg-success m-2">
+            <div class="card-body text-center">
+              <h5> {{glob.TotalRecovered}} </h5>
+              <p class="card-text text-dark">Recovered</p>
+            </div>
+          </div>
+          <div class="card bg-warning m-2">
+            <div class="card-body text-center">
+              <h5> {{glob.TotalDeaths}} </h5>
+              <p class="card-text text-dark"> Deaths</p>
+            </div>
+          </div>
+
+
+      </div>
+    </div>
+
+    <div class="card m-3 " style="width:400px">
+      <img class="card-img-top" src="https://cdn.primedia.co.za/primedia-broadcasting/image/upload/c_fill,w_700/m7ung8ahcsqgk1vzzu0d" alt="Card image" style="width:100%">
+      <div class="card-body">
+        <h2 class="card-title text-dark">Todays Cases</h2>
+        </div>
+
+        <div class="card-deck">
+          <div class="card bg-info m-2">
+            <div class="card-body text-center">
+              <h5> {{glob.NewConfirmed}} </h5>
+              <p class="card-text text-dark">Confirmed</p>
+            </div>
+          </div>
+          <div class="card bg-success m-2">
+            <div class="card-body text-center">
+              <h5> {{glob.NewRecovered}} </h5>
+              <p class="card-text text-dark">Recovered</p>
+            </div>
+          </div>
+          <div class="card bg-warning m-2">
+            <div class="card-body text-center">
+              <h5> {{glob.NewDeaths}} </h5>
+              <p class="card-text text-dark"> Deaths</p>
+            </div>
+          </div>
+
+
+      </div>
+    </div>
+  </div>
+        
+    </div>
+  <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+  
+    <div class="container-fluid p-3">
+      <h3 class="text-center text-capitalize text-info">Countries AFFECTED</h3>
+      <hr class="w-25 mx-auto">
+      <footer class="text-muted small">Sources: WHO, CDC, ECDC, NHC of the PRC, JHU CSSE, DXY, QQ, and various international media</footer>
+    </div>
+
+
+    <table class="table table-striped table-dark table-bordered table-hover table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Country</th>
+          <th scope="col">Confirmed</th>
+          <th scope="col">Recovered</th>
+          <th scope="col">Deaths</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for instance1 in instArr %}
+        <tr>
+          <th scope="row">{{instance1.Country}}</th>
+          <td>{{instance1.TotalConfirmed}}</td>
+          <td>{{instance1.TotalRecovered}}</td>
+          <td>{{instance1.TotalDeaths}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+  </div>
+
+</div>
+
+
+
+
+<!---  Articles Daily -->
+<section>
+
+  <div class="container-fluid p-3">
+    <h1 class="text-center text-capitalize text-secondary">top Articles for the day</h1>
+    <hr class="w-25 mx-auto">
+  </div>
+
+</section>
+<div id="demo" class="carousel slide bgarticle-img " data-ride="carousel">
+  <ul class="carousel-indicators">
+              <li data-target="#demo" data-slide-to="0" class="active"></li>
+              <li data-target="#demo" data-slide-to="1"></li>
+              <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class ="row">
+                  <div class="col-lg-7 col-md-7 col-sm-6 col-12">
+                    <img src="https://share.sandia.gov/news/resources/news_releases/images/2020/covid-19%20countermeasure.jpg" alt="Markets" class="img-thumbnail img-responsive" width = "100%" height="400">
+                    <div class="carousel-caption text-dark">
+                      <h3 >COVID 19 Genomic Plot</h3>
+                    </div>   
+                  </div>
+              <div class="col-lg-5 col-md-5 col-sm-6 col-12"> 
+                <h1 class="text-primary"> The Real genome </h1>
+                <p class="text-justified"> Despite extensive laboratory investigations in patients with respiratory tract infections, no microbiological cause can be identified in a significant proportion of patients. In the past 3 years, several novel respiratory viruses, including human metapneumovirus, severe acute respiratory syndrome (SARS) coronavirus (SARS-CoV), and human coronavirus NL63, were discovered. Here we report the discovery of another novel coronavirus, coronavirus HKU1 (CoV-HKU1), from a 71-year-old man with pneumonia who had just returned from Shenzhen, China. Quantitative reverse transcription-PCR showed that the amount of CoV-HKU1 RNA was 8.5 to 9.6 × 106 copies per ml in his nasopharyngeal aspirates (NPAs) during the first week of the illness and dropped progressively to undetectable levels in subsequent weeks. He developed increasing serum levels of specific antibodies against the recombinant nucleocapsid protein of CoV-HKU1, with immunoglobulin M (IgM) titers of 1:20, 1:40, and 1:80 and IgG titers of <1:1,000, 1:2,000, and 1:8,000 in the first, second and fourth weeks of the illness, respectively. Isolation of the virus by using various cell lines, mixed neuron-glia culture, and intracerebral inoculation of suckling mice was unsuccessful. The complete genome sequence of CoV-HKU1 is a 29,926-nucleotide, polyadenylated RNA, with G+C content of 32%, the lowest among all known coronaviruses with available genome sequence. Phylogenetic analysis reveals that CoV-HKU1 is a new group 2 coronavirus. Screening of 400 NPAs, negative for SARS-CoV, from patients with respiratory illness during the SARS period identified the presence of CoV-HKU1 RNA in an additional specimen, with a viral load of 1.13 × 106 copies per ml, from a 35-year-old woman with pneumonia. Our data support the existence of a novel group 2 coronavirus associated with pneumonia in humans.</p>
+
+              </div>
+            </div>  
+              </div>
+              <div class="carousel-item">
+                <div class ="row">
+                  <div class="col-lg-7 col-md-7 col-sm-6 col-12">
+                <img src="https://bigcedar.com/wp-content/uploads/2019/03/big-cedar-golf-header.jpg" alt="Air" class="img-fluid img-thumbnail" width = "100%" >
+                <div class="carousel-caption text-dark">
+                  <h3>The Lonely Environment</h3>
+                </div>
+              </div>
+              <div class="col-lg-5 col-md-5 col-sm-6 col-12 ">
+                
+              
+                <h1 class="text-primary"> The Covid Environment Protection </h1>
+
+                <p class="text-justified m-2">The damage to the global economy from COVID-19 threatens to far exceed that of the recession of 2007-2009 and could, according to the International Monetary Fund, trigger the worst recession since the Great Depression of the 1930s. Governments desperate to reopen moribund economies are now tiptoeing around the lockdown to avoid the dreaded “second wave” of the virus. </p>
+                <p class="text-justified m-2">However, as lockdown exit strategies turn their attention to saving livelihoods, there is pressure on governments to lower environmental standards, suspend environmental monitoring requirements and reduce environmental enforcement, in the belief that this is necessary to salvage economic growth. Yet, it would be a mistake to assume that there is a trade-off between saving livelihoods and protecting the environment. The crisis of COVID-19 has highlighted that improving the quality of air in our country is not a matter of choice but an emergency.</p>
+                <p class="text-justified m-2">For all these reasons and more, the pandemic is an urgent call to action on the environment — air pollution in particular — on a war footing. In the past, we have never treated air pollution as a national emergency, failing to coordinate between the Centre and state governments. The COVID pandemic has been declared a national disaster in India, under the National Disaster Management Act, 2005. This legislation mandates the disaster authorities at the national, state and district levels under the Act, as well as the Central and state governments, coordinate among themselves and take measures for the prevention and mitigation of the pandemic. Air pollution creates medical conditions that gravely increase the risk of fatalities from COVID-19.</p>
+              
+              </div>
+            </div>     
+              </div>
+              <div class="carousel-item">
+                <div class ="row">
+                  <div class="col-lg-7 col-md-7 col-sm-6 col-12">
+
+                    <img src="https://www.aljazeera.com/mritems/Images/2020/3/22/f9bf7982d94a472ab13b0f302212b256_8.jpg" alt="Workers" class="img-fluid img-thumbnail" width = "100%" height="100%">
+                    <div class="carousel-caption text-light">
+                      <h3 >Busy Roads in times of Pandemic</h3>
+                    </div> 
+
+                  </div>
+                  <div class="col-lg-5 col-md-5 col-sm-6 col-12">
+                    
+                  
+                    <h1 class="text-primary"> The Busy Roads </h1>
+                    <p class="text-justified">
+                    Deserted streets, no private vehicles on the roads and public transport virtually absent - all these tell the grim story of Chinese city of Wuhan, the ground zero of the coronavirus outbreak, according to a student who recently returned from the neighbouring country.
+
+Ashish Kurme, an MBBS student studying at a university near Wuhan, said the first case of the novel coronavirus (Covid-19) was detected on December 8, 2019, but he came to know about the outbreak only in the first week of June. 
+He said life in the vibrant city, the capital of Hubei province, slowly started to change.
+
+"The process to monitor daily body temperature was on since the first week of January. We were moving freely and I had been to markets and friends' houses till January 23. But this day a lockdown was announced and our movement was hampered.
+
+"We were made to remain in our residences and our teachers took care of our needs. Chinese citizens were not allowed to enter our premises till we wer ..
+
+Read more at:
+https://economictimes.indiatimes.com/news/international/world-news/covid-19-empty-roads-no-vehicles-turn-wuhan-into-a-ghost-town/articleshow/74506587.cms?utm_source=contentofinterest&utm_medium=text&utm_campaign=cppst</p>
+
+
+</div>
+                </div>  
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </a>
+</div>
+
+{% endblock %}
