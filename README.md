@@ -32,3 +32,5 @@ III : (If using Virtual Environment by the name 'start' , In Terminal : ) workon
 IV : (In Terminal : ) python manage.py runserver
 
 
+
+Do check : https://youtu.be/o0TfqkRHgYs
