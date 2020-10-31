@@ -12,5 +12,7 @@ urlpatterns = [
     path('dashboard',views.dashboard),
     path('comparitive_analytics',views.comparitive_analytics),
     path('cma',views.cma),
-    path('india',views.india)
+    path('india',views.india),
+    path('localdash',views.localdash),
+    path('login',views.login)
 ]

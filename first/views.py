@@ -3,8 +3,6 @@ from django.http import HttpResponse
 from .models import covid_gen_info , global_gen_info , news ,travel
 import numpy as np
 import random
-# Create your views here.
-
 import pandas as pd
 from pandas.io.json import json_normalize  
 import requests
@@ -12,7 +10,6 @@ import warnings
 import json
 import mysql.connector
 import sqlalchemy
-
 warnings.filterwarnings("ignore")
 
 global td , ts , tm , cnt 
@@ -171,6 +168,7 @@ def database_update():
     world_timeseries()
     countrywise()
     countrycodeconversion()
+    state()
 def read(query):
     sqlEngine = sqlalchemy.create_engine('mysql+pymysql://user:root@127.0.0.1', pool_recycle=3600)
     dbConnection = sqlEngine.connect()
@@ -347,18 +345,13 @@ def home(request):
     #return render(request,'news.html',{'news':walstreetnews() ,'newsit':techcrunch()})
     
     #return render(request,'covid19.html')
-
-
-"""
-#country_const , col_const , lt_const ,color = country_series_list(country_constant())
-'const_country':country_const,
-'const_col': col_const ,
-'const_lt': lt_const,
-'colos':color
+def localdash(request):
+    return render(request,'logindash.html');
+def login(request):
+    return render(request,'login.html');
 
 
 
-"""
 
 def dashboard(request):
     dates , confirmed , deaths , recovered ,  dconfirmed , ddeaths , drecovered= getBarData()
